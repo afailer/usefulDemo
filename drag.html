@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.div{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				
+				left: 100px;
+				top:100px;
+			}
+			#target{
+				left: 300px;
+				top: 300px;
+			}
+			#container{
+				width: 800px;
+				height: 800px;
+				position: relative;
+				margin: 100px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<input type="button" id="btn" value="生成div"/>
+			<div class="div" id="target"></div>
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script type="text/javascript" src="js/public.js" ></script>
+<script type="text/javascript" src="js/drag.js" ></script>
+<script>
+	$("#btn").click(function(){
+		var setting={
+			obj:$("<div></div>").css("background",getColor()),
+			parent:$("#container"),
+			cssName:"div",
+			//d:"h",// "h" stands for Horizontal."v" stands for  Vertical
+			callBack:function(thisSetting){
+				if(pz(thisSetting.obj,$("#target"))){
+					$("#target").css("background","#0000FF");
+				}else{
+					$("#target").css("background","red");
+				}
+			}
+		}
+		new Drag().init(setting);
+	})
+	function pz(obj1,obj2){
+			var flag=true;
+			var obj1Top=obj1.position().top;
+			var obj1Left=obj1.position().left;
+			var obj1Width=obj1.width();
+			var obj1Height=obj1.height();
+			
+			var obj2Top=obj2.position().top;
+			var obj2Left=obj2.position().left;
+			var obj2Width=obj2.width();
+			var obj2Height=obj2.height();
+			if(obj1Left+obj1Width<obj2Left){
+				flag=false;
+			}else if(obj1Left>obj2Left+obj2Width){
+				flag=false;
+			}else if(obj1Top+obj1Height<obj2Top){
+				flag=false;
+			}else if(obj1Top>obj2Top+obj2Height){
+				flag=false;
+			}
+			return flag;
+		}
+</script>

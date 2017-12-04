@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			.container{
+				width: 100%;
+				height: 100%;
+			}
+			li{
+				list-style: none;
+			}
+			.img{
+				width: 230px;
+				padding: 4px;
+				border: 1px solid #999;
+			}
+			.col{
+				width: 240px;
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!--<div class="col"></div>-->
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script>
+	var that;
+	class WaterPull{
+		constructor(){
+			that=this;
+		}
+		loadImg(){//加载图片
+			$.ajax({
+				type:"get",
+				url:"pbl.json",
+				async:false,
+				success:function(data){
+					console.log(data);
+					that.addImg(data);
+				}
+			})
+		}
+		init(){//初始化方法，添加div，加载图片
+			var divNum=Math.floor($(".container")[0].offsetWidth/240);
+			console.log("divNum"+divNum);
+			for(var v=0; v<divNum;v++){
+				this.addDiv()
+			}
+			this.loadImg();
+			return this;
+		}
+		addDiv(){//增加一个列
+			var div=$("<div></div>");
+			div.addClass("col");
+			$(".container").eq(0).append(div);
+		}
+		reduceDiv(){//缩放时减少div
+			var cols=$(".col");
+			var children=cols.children();
+			cols[cols.length-1].remove();
+			this.reAddImgs(children);
+		}
+		resetPadding(){//页面宽度变化时重新设置每一列div的margin
+			var cols=$(".col");
+			var margin=Math.floor(($(".container")[0].offsetWidth-cols.length*240)/(cols.length*2));
+			if(margin<0){//每个div之间已经挨住，此时需要减少一列div。减少的这列div中的图片添加到其它div中
+				this.reduceDiv();
+				this.resetPadding();//这次一定走最后一个else
+			}else if(margin*2*cols.length>cols[0].offsetWidth){//所有列的margin加起来大于 列的宽度，此时可以再增加一类
+				this.addDiv();
+				this.resetPadding();//这次也一定走最后一个else
+	 			this.resetImgs($(".col"));//将其它div中的图片，添加到新的div中
+			console.log($(".col"))
+			}else{//重新设置div之间的margin。
+				cols.css("margin-left",margin).css("margin-right",margin);
+			}
+			
+		}
+		addImg(imgs){//将网络请求回来的json图片数组添加到页面中
+			for (var v=0;v<imgs.length;v++) {
+				var img=$("<img/>");
+				img.addClass("img");
+				
+				img.attr({src:imgs[v].src,
+							width:230,
+							height:imgs[v].height
+							});
+				that.getTargetDiv().append(img);
+				//var img=document.createElement("img");
+				//img.className="img";
+				//img.src=`${imgs[v].src}`;
+			}
+			
+		}
+		resetImgs(divs){//当页面变宽，增加一个div时，重新分配div
+			
+//			var index=this.getHighestDivIndex();//拿到最高的那一列
+//			console.log("fun:resetImgs : "+index)
+//			if(index!=divs.length-1){
+//				var tc=divs.eq(index).children();//最高的那一列中的所有图片
+//				var targetImg=tc.eq(tc.length-1);//最高那一列最下面的那张图片
+//				console.log("resetImgs"+index+" "+tc.length+" "+targetImg.attr("src"));
+//				divs.eq(divs.length-1).append(targetImg);
+//				//tc.eq(tc.length-1).remove();
+//				this.resetImgs(divs);
+//			}
+			var index=this.getTargetDiv(1);//拿到最高的那一列
+			console.log("fun:resetImgs : "+index)
+			if(index==divs.length-1){
+				var tc=divs.eq(this.getHighestDivIndex()).children();//最高的那一列中的所有图片
+				var targetImg=tc.eq(tc.length-1);//最高那一列最下面的那张图片
+				console.log("resetImgs"+index+" "+tc.length+" "+targetImg.attr("src"));
+				divs.eq(divs.length-1).append(targetImg);
+				//tc.eq(tc.length-1).remove();
+				this.resetImgs(divs);
+			}
+		}
+		reAddImgs(imgs){//减少一个div的时候，将该div的图片放到其它的div下
+			for (var v=0;v<imgs.length;v++) {
+				that.getTargetDiv().append(imgs[v]);
+			}
+		}
+		getHighestDivIndex(){//重新分配图片时，拿到高度最高的那个div，从这里面取出最后一张图片
+			var divs=$(".col");
+			var minHeight=0;
+			var index=0;
+			
+			for(let v=0;v<divs.length;v++){//遍历所有的列
+				var h=divs[v].offsetHeight;
+				if(h>minHeight){//当前列的高度比minheight大
+					minHeight=h;
+					index=v;
+				}
+				console.log("minHeight: "+minHeight+" h:"+h+"index : "+index);
+			}
+			return index;
+		}
+		getTargetDiv(i){//得到目标div，也就是高度最小的div
+			var divs=$(".col");
+			var minHeight=9999999;
+			var index=0;
+			
+			for(let v=0;v<divs.length;v++){
+				var h=divs[v].offsetHeight;
+				if(h<minHeight){
+					minHeight=h;
+					index=v;
+				}
+			}
+			if(i==1){
+				return index;
+			}
+			return divs.eq(index);
+		}
+	}
+	var waterPull=new WaterPull();
+	window.onload=function(){
+		waterPull.init().resetPadding();
+	}
+
+	$(window).resize(function(){
+		waterPull.resetPadding();
+	})
+	
+	$(window).scroll(function(){
+		//console.log($(window).scrollTop()+"   "+(waterPull.getTargetDiv().innerHeight()-$(window).height()));
+//		if($(window).scrollTop()>(waterPull.getTargetDiv().innerHeight()-$(window).height())){
+//			waterPull.loadImg();
+//		}
+	})
+</script>

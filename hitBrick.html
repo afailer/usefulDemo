@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#container{
+				width: 800px;
+				height: 450px;
+				margin: 100px auto;
+				border: 1px solid red;
+				position: relative;
+			}
+			#board{
+				height: 20px;
+				width: 100px;
+				top: 428px;
+				background: orange;
+				border: 1px solid red;
+				border-radius: 10px;
+				position: absolute;
+				bottom: 0;
+			}
+			#ball{
+				width: 30px;
+				height: 30px;
+				background: black;
+				border-radius: 50%;
+				position: absolute;
+				bottom: 22px;
+				left: 20px;
+			}
+			.brick{
+				width: 80px;
+				height: 20px;
+				background: red;
+				position:absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="ball"></div>
+			<div id="board"></div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script type="text/javascript" src="js/public.js" ></script>
+<script type="text/javascript" src="js/drag.js" ></script>
+<script>
+	window.onload=function(){
+		new Ball().addBrick().startMove();
+	}
+	class Ball{
+		constructor(){
+			this.ball=$("#ball");
+			this.board=$("#board");
+			this.container=$("#container");
+			this.speedX=2;
+			this.speedY=-2;
+			//var setting=
+			new Drag().init({
+				obj:$("#board"),
+				parent:$("#container"),
+				//d:"h"
+			});
+		}
+		addListener(){
+			$("document")
+		}
+		addBrick(){
+			var width=80;
+			var height=20
+			var addLine=function(top){
+				for(var v=0;v<10;v++){
+					var div=$("<div></div>");
+					div.addClass("brick");
+					div.css("top",top*height+"px");
+					div.css("left",width*v+"px");
+					div.css("background",getColor());
+					$("#container").append(div);
+				}
+			}
+			for(var v=0;v<5;v++){
+				addLine(v);	
+			}
+			return this;
+		}
+		startMove(){
+			this.timer=setInterval(function(){
+				this.ball.css("top",this.ball.position().top+this.speedY);
+				this.ball.css("left",this.ball.position().left+this.speedX);
+				if(this.ball.position().left<3 || this.ball.position().left>($("#container").width()-this.ball.width())){
+					this.speedX=this.speedX*(-1);
+				}
+				if(this.ball.position().top+this.ball.height()>=this.container.height()){
+					clearInterval(this.timer);
+				}
+				//
+				else if(this.pz(this.ball,this.board)){
+					this.speedY=(-1)*Math.abs(this.speedY);
+				}
+				if(this.ball.position().top<0){
+					this.speedY=Math.abs(this.speedY);
+				}
+				var bricks=$(".brick");
+				for(var v=0;v<bricks.length;v++){
+					if(this.pz(bricks.eq(v),this.ball)){
+						this.speedY=this.speedY*(-1);
+						bricks.eq(v).remove();
+					}
+				}
+			}.bind(this),30);
+		}
+
+		pz(obj1,obj2){
+			var flag=true;
+			var obj1Top=obj1.position().top;
+			var obj1Left=obj1.position().left;
+			var obj1Width=obj1.width();
+			var obj1Height=obj1.height();
+			
+			var obj2Top=obj2.position().top;
+			var obj2Left=obj2.position().left;
+			var obj2Width=obj2.width();
+			var obj2Height=obj2.height();
+			if(obj1Left+obj1Width<obj2Left){
+				flag=false;
+			}else if(obj1Left>obj2Left+obj2Width){
+				flag=false;
+			}else if(obj1Top+obj1Height<obj2Top){
+				flag=false;
+			}else if(obj1Top>obj2Top+obj2Height){
+				flag=false;
+			}
+			return flag;
+		}
+	}
+//function dragDiv(){
+//	this.init=function(obj){
+//		this.div=obj;
+//		this.div.mousedown(this.down);
+//		
+//	},
+//	this.down=function(e){
+//		this.disX = e.pageX-this.div.position().left;
+//		this.disY=e.pageY-this.div.position().top;
+//		document.onmousemove=this.move;
+//		document.onmouseup=this.up;
+//	}.bind(this),
+//	this.move=function(e){
+//		var e=e||event;
+//		this.div.css("left",e.pageX-this.disX);
+//		this.div.css("top",e.pageY-this.disY);
+//	}.bind(this),
+//	this.up=function(e){
+//		var e=e||event;
+//		document.onmousemove="";
+//		document.onmouseup="";
+//	}.bind(this)
+//}
+</script>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body>
+		<ul class="shoplist clearfix" id="main">
+			<!--<li>
+				<img src="img/1.jpg" alt="" />
+				<p>小米1</p>
+				<p>999</p>
+				<button>购买</button>
+			</li>-->
+		</ul>	
+		<div id="box">
+			<span id="left">上一页</span>
+			<ul id="u">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+			<span id="right">下一页</span>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script type="text/javascript" src="js/ajax.js" ></script>
+<script>
+	Array.prototype.copy=function(arr){
+		for(var v=0; v<arr.length; v++){
+			this.push(arr[v]);
+		}
+	}
+	function Manager(){
+		this.pageSize=4,
+		this.datas=[],
+		this.load=function(){
+			that=this;
+			$.ajax({
+				type:"get",
+				url:"data.json",
+				async:false,
+				success:function(data){ 
+					that.datas.copy(data);//请求回来的数组添加到本身的数组
+					console.log(that.datas.length);
+					that.initPageSize(that.datas.length);//设置下方的页码；
+				}
+			});
+			return this;
+		},
+		this.addToPage=function(index){//将指定页码的内容添加到页面中
+			console.log("addToPage");
+			var pageStr="";
+			console.log(this.datas.length);
+			for(var v = (index-1)*this.pageSize; v < index*this.pageSize;v++){
+				if(v>=0&&v<this.datas.length){
+					pageStr+=`<li>
+							<img src="img/${this.datas[v].src}" alt="" />
+							<p>${this.datas[v].name}</p>
+							<p>${this.datas[v].price}</p>
+							<button>购买</button>
+						</li>`
+						console.log(v+" "+pageStr);
+				}
+			}
+			$("#main").html(pageStr);
+		},
+		this.initPageSize=function(dataNum){//当 请求回内容时，重新设置下方的页码
+			var num=Math.ceil(dataNum/this.pageSize);//总页码除以每一页的条数
+			var numStr="";
+			for(var v=1;v<=num;v++){
+				numStr += `<li>${v}</li>`
+			}
+			$("#u").html(numStr);
+		},
+		this.btnChange=function(num){//点击过的页码，页码的样式发生改变
+			$("#u").children().eq(num).addClass("active").siblings().removeClass("active");
+		},
+		this.btnClick=function(){//点击指定的页码
+			if(pageNo<1){
+				pageNo=1;
+				return;
+			}
+			if(pageNo>Math.ceil(this.datas.length/this.pageSize)){
+				pageNo=Math.ceil(this.datas.length/this.pageSize)
+				return;
+			}
+			console.log("btnClick")
+			this.btnChange(pageNo-1);
+			this.addToPage(pageNo);
+		}
+	}
+	
+	var manager = new Manager().load();
+	var pageNo=1;
+	manager.btnClick();
+	$("#u").children().click(function(){
+		pageNo=this.innerHTML;
+		manager.btnClick();
+	})
+	$("#left").click(function(){
+		--pageNo;
+		manager.btnClick(); 
+	});
+	$("#right").click(function(){
+		++pageNo;
+		manager.btnClick();
+	})
+	
+</script>

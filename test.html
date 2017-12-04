@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 200px;
+				height: 200px;
+				background: red;
+				position: absolute;
+			}
+			#div1{
+				top: 200px;
+				left: 200px;
+			}
+			#div2{
+				top: 200px;
+				left: 600px;
+				background: oragne;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<div id="div2"></div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script>
+	var Plane=function(){
+		this.blood=100;
+		this.attackLevel=3;
+		this.defenceLevel=2;
+		this.fuck=function(){
+			alert("your ass");
+		}
+	}
+	Plane.prototype.fuck=function(){
+		alert("you");
+	}
+	var plane=new Plane();
+	plane.blood=500;
+	plane.attackLevel=5;
+	plane.defenceLevel=5;
+	
+	//var clonePlane=Object.create(plane);
+	//console.log(clonePlane.blood+" "+clonePlane.attackLevel)
+	Object.c=function(obj){
+		var F=function(){}
+		F.prototype=obj;
+		return new F();
+	}
+	var cPlane=Object.c(plane);
+	cPlane.fuck();
+	console.log(cPlane.blood+" "+cPlane.attackLevel);
+	console.log(plane)
+</script>

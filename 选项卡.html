@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.container{
+				width:500px;
+				height: 400px;
+				margin: 100px auto;
+
+			}
+			.clicked{
+				background: red;
+				color: white;
+			}
+			.title{
+				width:500px;
+				height:100px;
+
+			}
+			li{
+				float: left;
+				width: 164px;
+				height: 98px;
+				border: 1px solid #ccc;
+				text-align: center;
+				line-height: 98px;
+			}
+			.content{
+				width:500px;
+				height: 300px;
+				overflow: hidden;
+			}
+			.content div{
+				width:500px;
+				height: 300px;
+				background: blue;
+				float: left;
+				display: block;
+			}
+			.hide{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<ul class="title">
+				<li>选项卡1</li>
+				<li>选项卡2</li>
+				<li>选项卡3</li>
+			</ul>
+			<div class="content">
+				<div>cont1</div>
+				<div>cont2</div>
+				<div>cont3</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script>
+	window.onload=function(){
+		$(".title").children().click(function(){
+			$(this).addClass("clicked").siblings().removeClass("clicked");
+			var index=$(this).index();
+			$(".content").children().eq(index).css("display","block").siblings().css("display","none");
+		});
+		//new card().init();
+	}
+	function card(){
+		this.titles=document.querySelector(".title").children;
+		this.contents=document.querySelector(".content").children;//$(".content").children();
+		
+		this.init=function(){
+			that=this;
+			console.log(this.titles.length+" "+this.contents.length);
+			for(let1= v=0;v<this.titles.length;v++){
+				this.titles[v].onclick=function(){
+					that.clear();
+					that.hideContent();
+					this.className="clicked";
+					that.contents[v].style.display="block";
+				}
+			}
+			
+		}
+		this.clear=function(){
+			for(var v=0;v<this.titles.length;v++){
+				this.titles[v].className="";
+			}
+		}
+		this.hideContent=function(){
+			for(var v=0;v<this.contents.length;v++){
+				this.contents[v].style.display="none";
+			}
+		}
+	}
+</script>
