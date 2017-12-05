@@ -4,15 +4,25 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<style>
+			li{
+				list-style: none;
+				
+			}
 			div{
 				width: 200px;
 				height: 200px;
-				background: red;
+				
 				position: absolute;
 			}
 			#div1{
+				color: red;
 				top: 200px;
 				left: 200px;
+			}
+			#div3{
+				width: 50px;
+				height: 50px;
+				
 			}
 			#div2{
 				top: 200px;
@@ -22,37 +32,165 @@
 		</style>
 	</head>
 	<body>
-		<div id="div1"></div>
+		<ul>
+			<li>1</li>
+			<li><span>2</span>
+				<ul>
+					<li><span>34</span>
+						<ul>
+							<li><span>23</span></li>
+							<li><span>43</span></li>
+							<li><span>54vd</span></li>
+						</ul>
+					</li>
+					<li>22</li>
+					<li>22</li>
+				</ul>
+			</li>
+			<li>3</li>
+			<li><span>4</span>
+				<ul>
+					<li>44</li>
+					<li>44</li>
+					<li>44</li>
+				</ul>
+			</li>
+			<li>5</li>
+		</ul>
+		<div id="div1">
+			sdfsd
+			<div id="div3">
+				<p>sdfsdfsdf</p>
+				<a>sdf</a>
+			</div>
+		</div>
 		<div id="div2"></div>
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
 <script>
-	var Plane=function(){
-		this.blood=100;
-		this.attackLevel=3;
-		this.defenceLevel=2;
-		this.fuck=function(){
-			alert("your ass");
+	$("li").has("ul").click(function(){
+		//console.log($(this).children().css("display"));
+		if($(this).children().css("display")=="none"){
+			console.log("block")
+			$(this).children().css("display","block");
+		}else{
+			$(this).children().css("display","none");
 		}
-	}
-	Plane.prototype.fuck=function(){
-		alert("you");
-	}
-	var plane=new Plane();
-	plane.blood=500;
-	plane.attackLevel=5;
-	plane.defenceLevel=5;
+		
+	});
+//	$("ul").click(function(){
+//		alert("ulClick")
+//	})
+
+$("li").has("ul").children("span").click(function(){
+		if($(this).parent().children("ul").css("display")=="none"){
+			$(this).parent().children("ul").css("display","block")
+		}else{
+			$(this).parent().children("ul").css("display","none");
+		}
+	})
 	
-	//var clonePlane=Object.create(plane);
-	//console.log(clonePlane.blood+" "+clonePlane.attackLevel)
-	Object.c=function(obj){
-		var F=function(){}
-		F.prototype=obj;
-		return new F();
+
+//----------------------------------------------
+$("li").filter(function(index){
+	if($(this).has("ul").length>0){
+		$(this).children("span").click(function(){
+			alert("click");
+			if($(this).parent().children("ul").css("display")=="none"){
+				$(this).parent().children("ul").css("display","block")
+			}else{
+				$(this).parent().children("ul").css("display","none");
+			}
+		})
 	}
-	var cPlane=Object.c(plane);
-	cPlane.fuck();
-	console.log(cPlane.blood+" "+cPlane.attackLevel);
-	console.log(plane)
+});
+	
+	
+//$("li:has(ul)").css("border","solid 1px black")
+	//$("li").eq(1).css("color","red");
+	//console.log($("li:has(ul)").eq(0).css("background-color"))
+//	console.log($("li").eq(0).height());
+//	console.log($("li:has(ul)").eq(0).width()+" "+$("li:has(ul)").eq(0).height())
+//	console.log($("ul").eq(0).css("background-color"));
+	//$("ul").css("background","white")
+	//$("li").eq(1).css("background","red");
+//	$("li").filter(function(index){
+//		console.log($(this).has("ul").length);
+//		if($(this).has("ul").length>=1){
+//			this.style.background="red"//css("background","red");
+//		}
+//	})
+//	Function.prototype.b=function(c){
+//		var self=this;
+//		//console.log(that instanceof Function);//true
+//		return function(){
+//			//console.log(this instanceof Window);//true
+//			//console.log(arguments.length);
+//			return self.apply(c,arguments);//仅仅为了改变this指向，arguments没有任何意义
+//		}
+//	}
+//	
+//	var obj={
+//		name:'andy'
+//	};
+//	var func=function(){
+//		console.log("--------"+this.name);
+//	}.b(obj);
+//	alert(func);
+//	func();
+	
+//	Function.call(obj,"");
+//	alert(Function.name);
+	
+//	var funt=function(obj){
+//		Function.call(obj,"");
+//		alert("-------"+this.name);
+//	}
+//	funt(obj);
+
+	//--------------------------------------------
+//	var arr=[1,2,3,4,5];
+//	arr.length=2;
+//	console.log(arr.join("-"));
+	//----------------------------------------------
+//	document.fuck=(function(fun){
+//		return function(){
+//			return fun.apply(document,arguments);
+//		}
+//	})(document.getElementById)
+//	var getId=document.fuck;
+//	 var div=getId("div1");
+//	 alert(div);
+//	
+//	-------------------------------------------------
+//	
+//	
+//	var Plane=function(){
+//		this.blood=100;
+//		this.attackLevel=3;
+//		this.defenceLevel=2;
+//		this.fuck=function(){
+//			alert("your ass");
+//		}
+//	}
+//	Plane.prototype.fuck=function(){
+//		alert("you");
+//	}
+//	var plane=new Plane();
+//	plane.blood=500;
+//	plane.attackLevel=5;
+//	plane.defenceLevel=5;
+//	
+//	//var clonePlane=Object.create(plane);
+//	//console.log(clonePlane.blood+" "+clonePlane.attackLevel)
+//	Object.c=function(obj){
+//		var F=function(){}
+//		F.prototype=obj;
+//		return new F();
+//	}
+//	var cPlane=Object.c(plane);
+//	cPlane.fuck();
+//	console.log(cPlane.blood+" "+cPlane.attackLevel);
+//	console.log(plane)
 </script>

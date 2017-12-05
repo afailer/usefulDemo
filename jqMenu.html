@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			li{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li><span>
+					sp1
+				</span></li>
+			<li><span>
+					asdfsdf
+				</span>
+				<ul>
+					<li><span>dgfhdh</span></li>
+					<li><span>sdfsdf</span>
+						<ul>
+							<li><span>sdfsdf</span></li>
+							<li><span>sdfsdf</span></li>
+							<li><span>dfgdfg</span></li>
+						</ul>
+					</li>
+					<li><span>sdfsdfs</span></li>
+				</ul>
+			</li>
+			<li><span>
+					sdfsdf
+				</span></li>
+			<li><span>
+					tryhdh
+				</span></li>
+			<li><span>
+					sdfgfsdg
+				</span>
+				<ul>
+					<li><span>gfjhgh</span></li>
+					<li><span>sdgfsdf</span></li>
+					<li><span>sdfsdf</span></li>
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script>
+	//$("li").has("ul").css("border","1px solid black");
+	
+//	$("li").has("ul").click(function(){
+//		//console.log($(this).children().css("display"));
+//		if($(this).children().css("display")=="none"){
+//			$(this).children().css("display","block");
+//		}else{
+//			$(this).children().css("display","none");
+//		}
+//		
+//	});
+	
+	
+//	$("li").has("ul").children("span").click(function(){
+//      if($(this).parent().children("ul").css("display")=="none"){
+//          $(this).parent().children("ul").css("display","block")
+//      }else{
+//          $(this).parent().children("ul").css("display","none");
+//      }
+//  })
+
+
+	$("li").filter(function(index){
+	    if($(this).has("ul").length>0){
+	    	$(this).css("list-style","square");
+	        $(this).children("span").click(function(){
+	            if($(this).parent().children("ul").css("display")=="none"){
+	                $(this).parent().children("ul").css("display","block")
+	            }else{
+	                $(this).parent().children("ul").css("display","none");
+	            }
+	        })
+	    }
+	});
+
+</script>
