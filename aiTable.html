@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.input{
+				width: 200px;
+				height: 38px;
+				line-height: 38px;
+			}
+			td{border: 1px solid black;}
+			table{
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<input class="input" name="fuck" type="text" id="col" placeholder="多少列"/>
+		<input class="input" type="text" id="row" placeholder="多少行"/>
+		<input type="button" id="cal" value="计算" />
+		<br />
+		<table id="tb"></table>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<script>
+	$("#cal").click(function(){
+		var rows=Number($("#row").val());
+		var cols=Number($("#col").val());
+		console.log(rows+" "+cols)
+		if(rows==0||cols==0||rows==undefined||cols==undefined){
+			alert("请输入合法数值");
+			return;
+		}
+		var str="";
+
+		for(var v=0;v<rows;v++){
+			str+=`<tr>`
+			for(var j=0;j<cols;j++){
+				str+=`<td>${v}行${j}列</td>`
+			}
+			str+=`<td><a href='#' class='del'>删除</a></td>`
+			str+=`</tr>`
+		}
+		
+		$("#tb").html(str);
+		
+		$(".del").click(function(){
+			 if(confirm("确定要删除数据吗？")){
+				$(this).parent().parent().remove();
+ 			}
+			
+		})
+	})
+	
+
+	//	document.getElementById=(function(arg){
+//		return function(){
+//			return arg.apply(document,arguments);
+//		}
+//	})(document.getElementById)
+//	var getId=document.getElementById;
+////	var getId=function (arg){
+////		return document.getElementById.applay(document,arguments);
+////	}
+//alert(getId);
+//	var div=getId("col");
+//	alert(div.name);
+	
+	function people(){
+		alert("法克鱿");
+	}
+	people.call(document,"");
+//	var p=(function(){
+//	people.apply(document,arguments);	
+//	})();
+</script>

@@ -25,6 +25,7 @@
 				height: 800px;
 				position: relative;
 				margin: 100px auto;
+				background: pink;
 			}
 		</style>
 	</head>
@@ -52,6 +53,9 @@
 				}else{
 					$("#target").css("background","red");
 				}
+			},
+			mouseLeave:function(setting){
+				this.obj.css("display","none");
 			}
 		}
 		new Drag().init(setting);

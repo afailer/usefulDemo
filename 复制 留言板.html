@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Document</title>
+  <script type="text/javascript" src="js/jquery-1.11.1.js" ></script>
+<style type="text/css">
+*{margin:0px; padding:0px;}
+body{background:#3FC;}
+#qq{width:600px;/*宽*/height:170px;/*高*/background:#fff;/*背景颜色*/
+ margin:50px auto 30px; border-radius:5px;/*Html5 圆角*/}
+#qq p{font-size:12px; color:#666; font-family:"微软雅黑";
+  line-height:45px; text-indent:20px;}
+#qq .message{width:560px; height:70px;margin:0px auto; outline:none;
+   border:1px solid #ddd; /*粗细 风格 颜色*/}
+#qq .But{width:560px;height:35px;margin:15px auto 0px; position:relative;/*相对，参考对象*/}
+#qq .But img.bq{float:left;/*左浮动*/}
+#qq .But span.submit{width:80px;height:30px; background:#ff8140;     display:block; float:right;/*右浮动*/        line-height:30px;border-radius:5px;        cursor:pointer;/*手指*/color:#fff;font-size:12px;     text-align:center;font-family:"微软雅黑";}
+/*face begin*/
+#qq .But .face{width:390px; height:160px; background:#fff; padding:10px;
+    border:1px solid #ddd; box-shadow:2px 2px 3px #666;
+    position:absolute;/*绝对定位*/ top:21px; left:15px;
+    display:none;/*隐藏*/}
+#qq .But .face ul li{width:22px;height:22px; 
+    list-style-type:none;/*去掉圆点*/ float:left;
+    margin:2px; cursor:pointer;}
+/*msgCon begin*/
+.msgCon{width:600px;height:500px; margin:0px auto;}
+.msgCon .msgBox{ background:#fff;
+    padding:10px; margin-top:20px;}
+.msgCon .msgBox dl{height:60px; border-bottom:1px dotted #ddd;}
+.msgCon .msgBox dl dt{width:50px; height:50px;float:left;}
+.msgCon .msgBox dl dt img{border-radius:25px;}
+.msgCon .msgBox dl dd{width:500px; height:50px;  line-height:50px;float:right; font-size:16px;font-family:"微软雅黑";}
+.msgCon .msgBox .msgTxt{font-size:12px; color:#666; line-height:30px; margin-top: 30px;}
+.time1{
+	margin-left:350px;
+}
+</style>
+
+ </head>
+ <body>
+<div id="qq">
+ <p>有什么新鲜事想告诉大家?</p>
+ <div  class="message" style="margin-left: 10px;"  contenteditable="true"></div> 
+ <div class="But">
+  <img src="img/s9.jpg" class='bq' width="22"/>
+  <span class='submit'>发表</span>
+  <!--face begin-->
+  <div class="face">
+   <ul>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+ 	<li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s1.jpg" title="[尴尬]" width="22"></li>
+    <li><img src="img/s2.jpg" title="[泪奔]" width="22"></li>
+    <li><img src="img/s3.jpg" title="[惊讶]" width="22"></li>
+    <li><img src="img/s4.jpg" title="[兴奋]" width="22"></li>
+    <li><img src="img/s9.jpg" title="[尴尬]" width="22"></li>
+   </ul>
+  </div>
+  <!--face end-->
+ </div>
+</div>
+<!--qq end-->
+ 
+<!--msgCon begin-->
+<div class="msgCon">
+	<!--<div class='msgBox'>		
+		<dl><dt><img src='img/tx.jpg'/></dt><dd>浮云</dd></dl>
+		<div class='msgTxt'>"+txt+"</div>
+	</div>-->
+</div>
+
+ </body>
+</html>
+<script type="text/javascript">
+	window.onload=function(){
+		new manager().init();
+	}
+	var that;
+	class manager{
+		constructor(){
+			this.bq=$(".bq").eq(0);
+			this.face=$(".face").eq(0);
+			this.expression=$(".face li");
+			this.message=$(".message").eq(0);
+			this.add=$(".submit").eq(0);
+			this.messageBox=$(".msgCon");
+			that=this;
+		}
+		init(){
+			this.listenExp();
+			this.add.click(function(){
+				that.sendMsg()
+			})
+		}
+		listenExp(){
+			this.bq.click(function(e){
+				e.stopPropagation();
+				if(this.face.css("display")=="block"){
+					this.face.slideUp();
+				}else{
+					this.face.slideDown();
+				}
+			}.bind(this));
+			$("body").click(function(){
+				this.face.slideUp();
+			}.bind(this))
+			this.expression.click(function(){
+				that.message.append($(this).children("img").clone());	
+			})
+		}
+		sendMsg(){
+			var txt=that.message.html();
+			that.messageBox.prepend(`<div class='msgBox'>		
+						<dl><dt><img src='img/tx.jpg'/></dt><dd>浮云</dd></dl>
+						<div class='msgTxt'>${txt}</div>`)
+			this.message.html("");
+		}
+	}
+</script>
+
+

@@ -4,7 +4,8 @@ function Drag(){
 			parent:$("#container"),
 			cssName:"div"
 			d:"v"// "h" stands for Horizontal."v" stands for  Vertical
-			callBack:function(setting){}
+			callBack:function(setting){},
+			mouseLeave:function(setting){}
 		}*/
 		this.init=function(setting){
 			//console.log(setting+" "+setting.stringify());
@@ -16,8 +17,12 @@ function Drag(){
 			}
 			this.maxWidth=this.setting.parent.width()-this.setting.obj.width();
 			this.maxHeight=this.setting.parent.height()-this.setting.obj.height();
-			this.div.mousedown(this.down);
-			
+			if(this.setting.mouseLeave!=undefined){
+				this.setting.parent.mouseenter(this.enter);
+				
+			}else{
+				this.div.mousedown(this.down);
+			}
 		},
 		this.down=function(e){
 			this.disX = e.pageX-this.div.position().left;
@@ -26,13 +31,19 @@ function Drag(){
 			document.onmouseup=this.up;
 			return false;
 		}.bind(this),
-		this.v=1;
+		this.enter=function(e){
+			this.disX=this.div.width()/2+this.setting.parent.offset().left;
+			this.disY=this.div.height()/2+this.setting.parent.offset().top;
+			this.setting.obj.css("display","block");
+			document.onmousemove=this.move;//js是等于，jQuery是leave
+			this.setting.parent.mouseleave(this.mouseLeave);
+		}.bind(this),
+		this.v=1,
 		this.move=function(e){
 			var e=e||event;
 			var left=e.pageX-this.disX;
 			var top=e.pageY-this.disY;
-			console.log(this.v%10);
-			
+			console.log(left+" "+top);
 			
 			var horizontal=true;
 			var vertical=true;
@@ -85,6 +96,10 @@ function Drag(){
 			var finalLeft=left+disx;
 			var finalTop=top+disy;
 			this.setting.obj.animate({top:""+finalTop,left:""+finalLeft},500)
+		}.bind(this),
+		this.mouseLeave=function(e){
+			document.onmousemove="";
+			this.setting.mouseLeave(this.setting);
 		}.bind(this)
 	}
 	

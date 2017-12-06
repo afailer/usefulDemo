@@ -121,24 +121,25 @@ $("li").filter(function(index){
 //			this.style.background="red"//css("background","red");
 //		}
 //	})
-//	Function.prototype.b=function(c){
-//		var self=this;
-//		//console.log(that instanceof Function);//true
-//		return function(){
-//			//console.log(this instanceof Window);//true
-//			//console.log(arguments.length);
-//			return self.apply(c,arguments);//仅仅为了改变this指向，arguments没有任何意义
-//		}
-//	}
-//	
-//	var obj={
-//		name:'andy'
-//	};
-//	var func=function(){
-//		console.log("--------"+this.name);
-//	}.b(obj);
-//	alert(func);
-//	func();
+	Function.prototype.b=function(c){
+		var self=this;
+		//console.log(that instanceof Function);//true
+		return function(){
+			//console.log(this instanceof Window);//true
+			//console.log(arguments.length);
+			return self.apply(c,arguments);//仅仅为了改变this指向，arguments没有任何意义
+			//self代表当前对象，apply会执行当前的函数体
+		}
+	}
+	
+	var obj={
+		name:'andy'
+	};
+	var func=function(){
+		console.log("--------"+this.name);
+	}.b(obj);
+	
+	func();
 	
 //	Function.call(obj,"");
 //	alert(Function.name);
