@@ -8,7 +8,6 @@ function Drag(){
 			mouseLeave:function(setting){}
 		}*/
 		this.init=function(setting){
-			//console.log(setting+" "+setting.stringify());
 			this.div=setting.obj;
 			this.setting=setting;
 			this.setting.parent.append(this.div);
@@ -43,8 +42,7 @@ function Drag(){
 			var e=e||event;
 			var left=e.pageX-this.disX;
 			var top=e.pageY-this.disY;
-			console.log(left+" "+top);
-			
+
 			var horizontal=true;
 			var vertical=true;
 			if(this.setting.d == "h"){

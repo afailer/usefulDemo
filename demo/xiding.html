@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			p{
+				height: 1000px;
+				background: red;
+			}
+			.div{
+				width: 100px;
+				height: 100px;
+				background: greenyellow;
+
+				top: 100px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<p></p>
+	
+		<div class="div"></div>
+	
+		<p></p>
+		<p></p>
+		<div class="div"></div>
+		<p></p>
+	</body>
+	<script type="text/javascript" src="../js/jquery-1.11.1.js" ></script>
+	<script type="text/javascript" src="../js/scroll.js" ></script>
+	<script>
+		var setting={
+			objList : [
+				{
+					obj:$(".div").eq(0),
+					dis:600
+				},
+				{
+					obj:$(".div").eq(1),
+					dis:600
+				}
+			]
+		}
+		new Scroll().init(setting);
+	</script>
+</html>
