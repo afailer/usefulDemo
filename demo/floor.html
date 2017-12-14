@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#floor{
+				position: fixed;
+				left: 0;
+				top: 180px;
+			}
+			li{
+				border: 1px solid black;
+				list-style: none;
+				height: 50px;
+				line-height: 50px;
+				background: white;
+				text-align: center;
+			}
+			.page{
+				height: 600px;
+				width: 800px;
+				margin: 0 auto;
+			}
+			.active{
+				background: brown;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="floor">
+			<ul>
+				<li class="f">floor1</li>
+				<li class="f active">floor2</li>
+				<li class="f">floor3</li>
+				<li class="f">floor4</li>
+				<li class="f">floor5</li>
+				<li class="f">floor6</li>
+				<li class="f">floor7</li>
+				<li class="f">floor8</li>
+				<li >顶部</li>
+			</ul>
+		</div>
+		<div class="page" style="background: red;">page1</div>
+		<div class="page" style="background: blue;">page2</div>
+		<div class="page" style="background: green;">page3</div>
+		<div class="page" style="background: yellow;">page4</div>
+		<div class="page" style="background: gray;">page5</div>
+		<div class="page" style="background: saddlebrown;">page6</div>
+		<div class="page" style="background: aqua;">page7</div>
+		<div class="page" style="background: blueviolet;">page8</div>
+	</body>
+</html>
+<script type="text/javascript" src="../js/jquery-1.11.1.js" ></script>
+<script>
+	var pages = $(".page");
+	var floors = $(".f");
+	
+</script>

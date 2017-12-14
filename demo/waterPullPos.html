@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			.container{
+				width: 100%;
+				height: 100%;
+			}
+			.img{
+				border: 1px solid black;
+				padding: 4px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../js/jquery-1.11.1.js" ></script>
+<script>
+	var w ;
+	window.onload=function(){
+		w= new waterFall();
+		w.init();
+	}
+	var that;
+	class waterFall{
+		constructor(){
+			this.pos=[];
+			this.con=$("#container");
+			this.vSpace=10;
+			that=this;
+		}
+		init(){
+			this.initPosition();
+			this.loadData();
+		}
+		loadData(){
+			var requst=$.ajax({
+				type:"get",
+				url:"http://127.0.0.1/usefulDemo/pbl.json",
+				async:true,
+				success:function(imgs){
+				
+					that.addDatas(imgs);
+				}
+			});
+		}
+		initPosition(){
+			
+			var colWidth=240;
+			var colNum = Math.floor($("#container").outerWidth()/colWidth);
+			var hSpace = ($("#container").outerWidth()-colNum*colWidth)/(colNum+1);
+			if(colNum!=this.colNum){
+				this.pos.length=0;
+				this.colNum = colNum;
+				console.log(hSpace+"----"+colWidth);
+				for(var v=0;v<this.colNum;v++){
+					var data = {
+						top:10,
+						left:(v+1)*hSpace+v*colWidth
+					}
+					this.pos.push(data);
+				}
+				var d={
+					data:this.pos
+				}
+				console.log("initCol"+JSON.stringify(d))
+				return true;
+			}else{
+				for(var v=0;v<this.colNum;v++){
+					var left = (v+1)*hSpace+v*colWidth;
+					this.pos[v].left=left;
+				}
+				var d={
+					data:this.pos
+				}
+				console.log("resetCol"+JSON.stringify(d))
+				return false;
+			}
+			
+ 			
+		}
+		addDatas(imgs){
+			for(var v=0;v<imgs.length;v++){
+				var index = this.getMinTopIndex();
+				var img=$(`<img class='img' src = ${'../'+imgs[v].src}></img>`);
+				$("#container").append(img);
+				img.animate({"left":this.pos[index].left,"top":this.pos[index].top},1000);
+				this.pos[index].top += img.outerHeight()+this.vSpace;
+			}
+		}
+		resetDatas(){
+			var imgs = $("img");
+			var reset=this.initPosition();
+			if(reset){
+				
+			}else{
+				for(var v=0;v<imgs.length;v++){
+					imgs.eq(v).animate({"left":that.pos[v%that.pos.length].left});
+				}
+			}
+		}
+		getMinTopIndex(){
+			var index=0;
+			for (var v=0;v<this.colNum;v++) {
+				if(this.pos[v].top<this.pos[index].top){
+					index = v;
+				}
+			}
+			return index;
+		}
+	}
+	
+	$(window).resize(function(){
+		w.resetDatas();
+	})
+</script>
